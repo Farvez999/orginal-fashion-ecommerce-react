@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Navbar = () => {
-    // const { user, logOut } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
 
     const handleLogOut = () => {
-        // logOut()
-        //     .then(() => { })
-        //     .then(error => console.log(error))
+        logOut()
+            .then(() => { })
+            .then(error => console.log(error))
     }
 
     const menuItem = <>
         <li className='font-semibold'><Link to='/'>Home</Link></li>
         <li className='font-semibold'><Link to='/blog'>Blog</Link></li>
-        <li className='font-semibold'><Link to='/login'>Login</Link></li>
         {/* <li className='font-semibold'><Link to='/appoinment'>Appoinment</Link></li>
         <li className='font-semibold'><Link to='/reviews'>Reviews</Link></li>
         <li className='font-semibold'><Link to='/contactUs'>Contact Us</Link></li> */}
-        {/* {
+        {
             user?.uid ?
                 <>
                     <li className='font-semibold'><Link to='/dashboard'>Dashboard</Link></li>
@@ -25,7 +25,7 @@ const Navbar = () => {
                 </>
                 :
                 <li className='font-semibold'><Link to='/login'>Login</Link></li>
-        } */}
+        }
     </>
 
     return (
