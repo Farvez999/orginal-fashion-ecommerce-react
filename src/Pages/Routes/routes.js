@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
-import AllUser from "../../Dashboard/AllUser"
+import AddBanner from "../Dashboard/Banner/AddBanner"
+import AllUser from "../Dashboard/AllUser"
+import Dashboard from "../Dashboard/Dashboard"
 import Home from "../Home/Home"
 import DashBoardLayout from "../Layout/DashBoardLayout"
 import Main from "../Layout/Main"
@@ -7,6 +9,8 @@ import Login from "../Login/Login"
 import SignUp from "../Login/SignUp"
 import AdminRoute from "./AdminRoutes"
 import PrivateRoutes from "./PrivateRoutes"
+import Banner from "../Home/Banner"
+import MyBanner from "../Dashboard/Banner/MyBanner"
 
 const router = createBrowserRouter([
     {
@@ -45,6 +49,10 @@ const router = createBrowserRouter([
         element: <PrivateRoutes><DashBoardLayout></DashBoardLayout></PrivateRoutes>,
         // errorElement: <DisplayError></DisplayError>,
         children: [
+            {
+                path: '/dashboard',
+                element: <Dashboard></Dashboard>
+            },
             // {
             //     path: '/dashboard/myProducts',
             //     element: <MyProducts></MyProducts>
@@ -65,6 +73,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/allUser',
                 element: <AdminRoute><AllUser></AllUser></AdminRoute>
+            },
+            {
+                path: '/dashboard/addBanner',
+                element: <AdminRoute><AddBanner></AddBanner></AdminRoute>
+            },
+            {
+                path: '/dashboard/banner',
+                element: <AdminRoute><MyBanner></MyBanner></AdminRoute>
             },
             // {
             //     path: '/dashboard/allBuyer',

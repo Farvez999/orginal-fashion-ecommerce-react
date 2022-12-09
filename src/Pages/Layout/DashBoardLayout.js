@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 import Navbar from '../Shared/Header/Navbar';
+import '../Dashboard/Dashboard.css'
 
 const DashBoardLayout = () => {
 
@@ -10,7 +11,7 @@ const DashBoardLayout = () => {
     const [isAdmin] = useAdmin(user?.email)
 
     return (
-        <div>
+        <div className='dashboard'>
             <Navbar></Navbar>
             <div className="drawer drawer-mobile">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
@@ -21,7 +22,7 @@ const DashBoardLayout = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-72 text-base-content">
+                    <ul className="menu p-4 w-60 text-base-content">
                         {/* <li><Link to={`/dashboard/allUser`}>All User</Link></li> */}
                         {/* {
                             !isSeller && !isAdmin && <>
@@ -41,6 +42,8 @@ const DashBoardLayout = () => {
                         {
                             isAdmin && <>
                                 <li><Link to={`/dashboard/allUser`}>All User</Link></li>
+                                <li><Link to={`/dashboard/addBanner`}>Add Banner</Link></li>
+                                <li><Link to={`/dashboard/banner`}>Banner</Link></li>
                                 <li><Link to={`/dashboard/allBuyer`}>All Buyers</Link></li>
                             </>
                         }
