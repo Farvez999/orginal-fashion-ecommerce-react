@@ -1,16 +1,36 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
 const Banner = () => {
+
+    const { data: banners = [], refetch } = useQuery({
+        queryKey: ['banners'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/banner');
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    console.log(banners)
+
     return (
-        <div className="hero min-h-screen" style={{ backgroundImage: `url("https://placeimg.com/1000/800/arch")` }}>
-            <div className="hero-overlay bg-opacity-60"></div>
-            <div className="hero-content text-center text-neutral-content">
-                <div className="max-w-md">
-                    <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-                    <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
+        <div className="carousel w-full">
+            {
+                banners.map((banner, index) => (
+                    <div id={`slide${banner._id}`} className="carousel-item relative w-full" key={banner.id}>
+                        {/* <img src={banner.img} className="w-full" /> */}
+                        <div className='carousel-img'>
+                            <img src={banner.img} alt="" className="w-full rounded-xl" />
+                        </div>
+
+                        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                            <a href={`#slide${banner._id}`} className="btn btn-circle">❮</a>
+                            <a href={`#slide${banner._id}`} className="btn btn-circle">❯</a>
+                        </div>
+                    </div>
+                ))
+            }
         </div>
     );
 };
