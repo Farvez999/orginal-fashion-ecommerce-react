@@ -11,6 +11,8 @@ import AdminRoute from "./AdminRoutes"
 import PrivateRoutes from "./PrivateRoutes"
 import Banner from "../Home/Banner"
 import MyBanner from "../Dashboard/Banner/MyBanner"
+import AddCategory from "../Dashboard/Category/AddCategory"
+import MyCategory from "../Dashboard/Category/MyCategory"
 
 const router = createBrowserRouter([
     {
@@ -81,6 +83,14 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/banner',
                 element: <AdminRoute><MyBanner></MyBanner></AdminRoute>
+            },
+            {
+                path: '/dashboard/addCategory',
+                element: <AdminRoute><AddCategory></AddCategory></AdminRoute>
+            },
+            {
+                path: '/dashboard/category',
+                element: <AdminRoute><MyCategory></MyCategory></AdminRoute>
             },
             // {
             //     path: '/dashboard/allBuyer',
