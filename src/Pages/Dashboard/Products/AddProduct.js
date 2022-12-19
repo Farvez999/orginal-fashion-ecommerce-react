@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../Pages/contexts/AuthProvider';
-import Loading from '../Pages/Shared/Loading/Loading';
+import { AuthContext } from '../../contexts/AuthProvider';
+import Loading from '../../Shared/Loading/Loading';
 
 const AddProduct = () => {
 
@@ -16,10 +17,20 @@ const AddProduct = () => {
 
     const navigate = useNavigate()
 
+    const { data: categories = [], refetch } = useQuery({
+        queryKey: ['categories'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/category');
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    console.log(categories)
 
     useEffect(() => {
         setLoader(true)
-        fetch(`https://used-products-resale-server-vert.vercel.app/users/${email}`)
+        fetch(`http://localhost:5000/users/${email}`)
             .then(res => res.json())
             .then(data => { return (setAuthor(data), setLoader(false)) })
     }, [email])
@@ -47,21 +58,16 @@ const AddProduct = () => {
                     const product = {
                         img: imgData.data.url,
                         title: data.title,
-                        location: data.location,
-                        date: new Date(),
                         used: data.used,
-                        productQuality: data.productQuality,
                         category: data.category,
                         email: author.email,
-                        resalePrice: data.resalePrice,
+                        discountPrice: data.discountPrice,
                         originalPrice: data.originalPrice,
                         description: data.description,
-                        mobileNumber: data.mobileNumber,
-
                         author: author,
                     }
 
-                    fetch(`https://used-products-resale-server-vert.vercel.app/addProduct`, {
+                    fetch(`http://localhost:5000/addProduct`, {
                         method: 'POST',
                         headers: {
 
@@ -77,7 +83,7 @@ const AddProduct = () => {
                                 console.log(data);
                                 setIsloader(false)
                                 toast.success('your product hasbeen process please waite for admin aproved')
-                                navigate('/dashboard/sellerProducts')
+                                navigate('/dashboard/myProducts')
                             }
                         })
                         .catch(error => { toast.error(error.message); setIsloader(false) })
@@ -106,7 +112,7 @@ const AddProduct = () => {
 
                             })} className="input input-bordered" />
                         </div>
-                        <div className="form-control">
+                        {/* <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Location</span>
                             </label>
@@ -114,7 +120,7 @@ const AddProduct = () => {
                                 required: "Location is required"
 
                             })} className="input input-bordered" />
-                        </div>
+                        </div> */}
 
                     </div>
                     <div className="grid lg:grid-cols-2 md:grid-2 sm:grid-1 gap-3">
@@ -129,16 +135,16 @@ const AddProduct = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Resale Price</span>
+                                <span className="label-text">Discount Price</span>
                             </label>
-                            <input type="ResalePrice" placeholder="ResalePrice" {...register("resalePrice", {
-                                required: "ResalePrice is required"
+                            <input type="discountPrice" placeholder="DiscountPrice" {...register("discountPrice", {
+                                required: "DiscountPrice is required"
 
                             })} className="input input-bordered" />
                         </div>
 
                     </div>
-                    <div className="form-control">
+                    {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text">Mobile Number</span>
                         </label>
@@ -146,8 +152,8 @@ const AddProduct = () => {
                             required: "Mobile Number is required"
 
                         })} className="input input-bordered" />
-                    </div>
-                    <div className='form-control my-3'>
+                    </div> */}
+                    {/* <div className='form-control my-3'>
                         <label className="label">
                             <span className="label-text">Product Quality :</span>
                         </label>
@@ -165,7 +171,7 @@ const AddProduct = () => {
                                 <label htmlFor="default-radio-3" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Fair</label>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
 
                     <div className="form-control">
@@ -175,13 +181,18 @@ const AddProduct = () => {
                         <select className={errors.category ? 'input-bordered input-error select select-bordered w-full' : 'select select-bordered w-full'} {...register("category", {
                             required: "Specialty is required",
                         })}>
-                            <option>Dell</option>
-                            <option>Hp</option>
-                            <option>Asus</option>
+                            {
+                                categories.map(category => <option
+                                    key={category._id}
+                                    value={category.categoryTitle}
+                                >{category.categoryTitle}</option>)
+                            }
 
                         </select>
                     </div>
-                    <div className="form-control">
+
+
+                    {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text">Used Year</span>
                         </label>
@@ -194,7 +205,7 @@ const AddProduct = () => {
                             <option>4 Years</option>
                             <option>5 Years</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div className="form-control mt-5">
                         <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700">select Product image</label>
                         <input className="form-control

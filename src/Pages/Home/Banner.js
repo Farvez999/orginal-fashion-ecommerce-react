@@ -18,15 +18,15 @@ const Banner = () => {
         <div className="carousel w-full">
             {
                 banners.map((banner, index) => (
-                    <div id={`slide${banner._id}`} className="carousel-item relative w-full" key={banner.id}>
+                    <div id={`${banner._id}`} className="carousel-item relative w-full" key={banner.id}>
                         {/* <img src={banner.img} className="w-full" /> */}
                         <div className='carousel-img'>
                             <img src={banner.img} alt="" className="w-full rounded-xl" />
                         </div>
 
                         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                            <a href={`#slide${banner._id}`} className="btn btn-circle">❮</a>
-                            <a href={`#slide${banner._id}`} className="btn btn-circle">❯</a>
+                            <a href={`${banner.img / index + 1}`} className="btn btn-circle">❮</a>
+                            <a href={`${index - 1}`} className="btn btn-circle">❯</a>
                         </div>
                     </div>
                 ))

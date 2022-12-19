@@ -13,6 +13,8 @@ import Banner from "../Home/Banner"
 import MyBanner from "../Dashboard/Banner/MyBanner"
 import AddCategory from "../Dashboard/Category/AddCategory"
 import MyCategory from "../Dashboard/Category/MyCategory"
+import AddProduct from "../Dashboard/Products/AddProduct"
+import MyProduct from "../Dashboard/Products/MyProduct"
 
 const router = createBrowserRouter([
     {
@@ -63,14 +65,14 @@ const router = createBrowserRouter([
             //     path: '/dashboard/myWishlists',
             //     element: <MyWishlists></MyWishlists>
             // },
-            // {
-            //     path: '/dashboard/addProducts',
-            //     element: <SellerRoute><AddProduct></AddProduct></SellerRoute>
-            // },
-            // {
-            //     path: '/dashboard/sellerProducts',
-            //     element: <SellerRoute><SellerProducts></SellerProducts></SellerRoute>
-            // },
+            {
+                path: '/dashboard/addProducts',
+                element: <AdminRoute><AddProduct></AddProduct></AdminRoute>
+            },
+            {
+                path: '/dashboard/myProducts',
+                element: <AdminRoute><MyProduct></MyProduct></AdminRoute>
+            },
 
             {
                 path: '/dashboard/allUser',
